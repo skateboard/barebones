@@ -1,3 +1,5 @@
+import me.brennan.barebone.task.Task;
+import me.brennan.barebone.task.manager.TaskManager;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -8,7 +10,14 @@ public class TaskTest {
 
     @Test
     public void testTask() {
+        final TaskManager taskManager = new TaskManager();
         final TestTask task = new TestTask();
-        task.runTask();
+        taskManager.add(task);
+        taskManager.executeTask(task.getUUID());
+
+        // keep main thread running
+        while (true) {
+
+        }
     }
 }

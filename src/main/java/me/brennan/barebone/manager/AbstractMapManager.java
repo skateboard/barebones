@@ -21,6 +21,10 @@ public class AbstractMapManager<K, V> implements Iterable<V> {
         map.remove(key);
     }
 
+    public V get(K key) {
+        return map.get(key);
+    }
+
     @NotNull
     @Override
     public Iterator<V> iterator() {

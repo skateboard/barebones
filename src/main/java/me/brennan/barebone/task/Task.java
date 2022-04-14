@@ -12,6 +12,8 @@ public interface Task {
 
     UUID getUUID();
 
+    State stop();
+
     /**
      * @return is the task stopped
      */

@@ -35,6 +35,7 @@ public abstract class AbstractTask implements Task {
     /**
      * This method is called when you want to stop the task.
      */
+    @Override
     public State stop() {
         setStopped(true);
         return States.NONE;
