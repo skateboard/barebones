@@ -1,5 +1,6 @@
 package me.brennan.barebones.task.types;
 
+import me.brennan.barebones.proxy.ProxyList;
 import me.brennan.barebones.task.Task;
 import me.brennan.barebones.state.State;
 import me.brennan.barebones.state.States;
@@ -14,6 +15,8 @@ import java.util.UUID;
 public abstract class AbstractTask implements Task {
     private final UUID uuid = UUID.randomUUID();
     private boolean stopped = false;
+
+    private ProxyList proxyList;
 
     private final OkHttpClient client = new OkHttpClient.Builder().build();
 
@@ -48,6 +51,11 @@ public abstract class AbstractTask implements Task {
     @Override
     public UUID getUUID() {
         return uuid;
+    }
+
+    @Override
+    public ProxyList getProxyList() {
+        return proxyList;
     }
 
     @Override

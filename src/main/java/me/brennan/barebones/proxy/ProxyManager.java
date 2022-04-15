@@ -1,6 +1,7 @@
 package me.brennan.barebones.proxy;
 
 import me.brennan.barebones.manager.AbstractMapManager;
+import me.brennan.barebones.util.MathUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,8 +15,7 @@ import java.util.Random;
  * @author Brennan / skateboard
  * @since 4/14/2022
  **/
-public class ProxyManager extends AbstractMapManager<String, List<Proxy>> {
-    private final Random random = new Random();
+public class ProxyManager extends AbstractMapManager<String, ProxyList> {
 
     /**
      * Will load all text documents containing the word "proxies" from the current use directory.
@@ -60,7 +60,7 @@ public class ProxyManager extends AbstractMapManager<String, List<Proxy>> {
                 }
             }
 
-            add(file.getName(), proxies);
+            add(file.getName(), new ProxyList(proxies));
 
             bufferedReader.close();
             fileReader.close();
@@ -76,16 +76,8 @@ public class ProxyManager extends AbstractMapManager<String, List<Proxy>> {
         }
     }
 
-    public Proxy randomProxy(String proxyList) {
-        if(isEmpty())
-            return null;
-
-        final List<Proxy> proxies = get(proxyList);
-        final Proxy proxy = proxies.get(random.nextInt(proxies.size()));
-        proxies.remove(proxy); // Remove the proxy from the list so it can't be used again.
-        add(proxyList, proxies); // Replace the proxy list back to the list.
-
-        return proxy;
+    public Proxy getRandomProxy(String proxyList) {
+        return get(proxyList).randomProxy();
     }
 
 }

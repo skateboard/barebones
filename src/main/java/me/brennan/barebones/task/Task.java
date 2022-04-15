@@ -1,5 +1,6 @@
 package me.brennan.barebones.task;
 
+import me.brennan.barebones.proxy.ProxyList;
 import me.brennan.barebones.state.State;
 import okhttp3.OkHttpClient;
 
@@ -35,6 +36,13 @@ public interface Task {
      * @return the next state to run
      */
     State next(State state);
+
+    /**
+     * The proxy list the task is using
+     *
+     * @return the proxy list
+     */
+    ProxyList getProxyList();
 
     /**
      * Our task current http client
