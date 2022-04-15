@@ -1,8 +1,8 @@
-package me.brennan.barebone.task.manager;
+package me.brennan.barebones.task.manager;
 
-import me.brennan.barebone.manager.AbstractMapManager;
-import me.brennan.barebone.task.types.AbstractTask;
-import me.brennan.barebone.task.Task;
+import me.brennan.barebones.manager.AbstractMapManager;
+import me.brennan.barebones.task.types.AbstractTask;
+import me.brennan.barebones.task.Task;
 
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;

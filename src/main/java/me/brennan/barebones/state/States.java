@@ -1,4 +1,4 @@
-package me.brennan.barebone.state;
+package me.brennan.barebones.state;
 
 /**
  * @author Brennan / skateboard

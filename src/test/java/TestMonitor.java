@@ -1,6 +1,6 @@
-import me.brennan.barebone.monitor.AbstractMonitor;
-import me.brennan.barebone.state.State;
-import me.brennan.barebone.state.States;
+import me.brennan.barebones.monitor.AbstractMonitor;
+import me.brennan.barebones.state.State;
+import me.brennan.barebones.state.States;
 
 import java.util.concurrent.TimeUnit;
 

@@ -1,8 +1,9 @@
-package me.brennan.barebone.task.types;
+package me.brennan.barebones.task.types;
 
-import me.brennan.barebone.task.Task;
-import me.brennan.barebone.state.State;
-import me.brennan.barebone.state.States;
+import me.brennan.barebones.task.Task;
+import me.brennan.barebones.state.State;
+import me.brennan.barebones.state.States;
+import okhttp3.OkHttpClient;
 
 import java.util.UUID;
 
@@ -13,6 +14,8 @@ import java.util.UUID;
 public abstract class AbstractTask implements Task {
     private final UUID uuid = UUID.randomUUID();
     private boolean stopped = false;
+
+    private final OkHttpClient client = new OkHttpClient.Builder().build();
 
     public AbstractTask() {
     }
@@ -44,7 +47,12 @@ public abstract class AbstractTask implements Task {
 
     @Override
     public UUID getUUID() {
-        return null;
+        return uuid;
+    }
+
+    @Override
+    public OkHttpClient getClient() {
+        return client;
     }
 
     @Override

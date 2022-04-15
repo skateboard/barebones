@@ -1,9 +1,9 @@
-package me.brennan.barebone.monitor;
+package me.brennan.barebones.monitor;
 
-import me.brennan.barebone.state.State;
-import me.brennan.barebone.state.States;
-import me.brennan.barebone.task.Task;
-import me.brennan.barebone.task.types.MonitoredTask;
+import me.brennan.barebones.state.State;
+import me.brennan.barebones.state.States;
+import me.brennan.barebones.task.types.MonitoredTask;
+import okhttp3.OkHttpClient;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +18,8 @@ public abstract class AbstractMonitor implements Monitor {
     private boolean stopped = false;
 
     private final List<MonitoredTask> tasks = new LinkedList<>();
+
+    private final OkHttpClient client = new OkHttpClient.Builder().build();
 
     public void runMonitor() {
         State state = States.INITIALIZE; // our initial state
@@ -39,6 +41,11 @@ public abstract class AbstractMonitor implements Monitor {
     @Override
     public UUID getUUID() {
         return uuid;
+    }
+
+    @Override
+    public OkHttpClient getClient() {
+        return client;
     }
 
     @Override

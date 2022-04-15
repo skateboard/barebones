@@ -1,7 +1,6 @@
-import me.brennan.barebone.state.State;
-import me.brennan.barebone.state.States;
-import me.brennan.barebone.task.Task;
-import me.brennan.barebone.task.types.MonitoredTask;
+import me.brennan.barebones.state.State;
+import me.brennan.barebones.state.States;
+import me.brennan.barebones.task.types.MonitoredTask;
 
 import java.util.concurrent.TimeUnit;
 

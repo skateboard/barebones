@@ -1,4 +1,4 @@
-package me.brennan.barebone.manager;
+package me.brennan.barebones.manager;
 
 import org.jetbrains.annotations.NotNull;
 

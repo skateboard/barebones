@@ -1,6 +1,7 @@
-package me.brennan.barebone.task;
+package me.brennan.barebones.task;
 
-import me.brennan.barebone.state.State;
+import me.brennan.barebones.state.State;
+import okhttp3.OkHttpClient;
 
 import java.util.UUID;
 
@@ -34,4 +35,10 @@ public interface Task {
      * @return the next state to run
      */
     State next(State state);
+
+    /**
+     * Our task current http client
+     * @return OkHttpClient - the http client
+     */
+    OkHttpClient getClient();
 }

@@ -1,8 +1,8 @@
-package me.brennan.barebone.monitor;
+package me.brennan.barebones.monitor;
 
-import me.brennan.barebone.state.State;
-import me.brennan.barebone.task.Task;
-import me.brennan.barebone.task.types.MonitoredTask;
+import me.brennan.barebones.state.State;
+import me.brennan.barebones.task.types.MonitoredTask;
+import okhttp3.OkHttpClient;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,4 +24,10 @@ public interface Monitor {
     void setStopped(boolean stopped);
 
     State next(State state);
+
+    /**
+     * Our monitor current http client
+     * @return OkHttpClient - the http client
+     */
+    OkHttpClient getClient();
 }

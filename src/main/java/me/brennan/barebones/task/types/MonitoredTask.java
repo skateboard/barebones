@@ -1,4 +1,4 @@
-package me.brennan.barebone.task.types;
+package me.brennan.barebones.task.types;
 
 import java.util.concurrent.TimeUnit;
 
