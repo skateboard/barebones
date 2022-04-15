@@ -1,6 +1,6 @@
 package me.brennan.barebone.task;
 
-import me.brennan.barebone.task.state.State;
+import me.brennan.barebone.state.State;
 
 import java.util.UUID;
 

@@ -1,7 +1,7 @@
 package me.brennan.barebone.task.manager;
 
 import me.brennan.barebone.manager.AbstractMapManager;
-import me.brennan.barebone.task.AbstractTask;
+import me.brennan.barebone.task.types.AbstractTask;
 import me.brennan.barebone.task.Task;
 
 import java.util.UUID;

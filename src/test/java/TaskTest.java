@@ -11,8 +11,15 @@ public class TaskTest {
     @Test
     public void testTask() {
         final TaskManager taskManager = new TaskManager();
-        final TestTask task = new TestTask();
+
+        final TestMonitor monitor = new TestMonitor();
+        final TestMonitorTask task = new TestMonitorTask();
+
         taskManager.add(task);
+
+        monitor.addTask(task);
+
+        new Thread(monitor::runMonitor).start();
         taskManager.executeTask(task.getUUID());
 
         // keep main thread running

@@ -1,4 +1,4 @@
-package me.brennan.barebone.task.state;
+package me.brennan.barebone.state;
 
 /**
  * @author Brennan / skateboard

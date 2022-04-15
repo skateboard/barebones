@@ -1,7 +1,8 @@
-package me.brennan.barebone.task;
+package me.brennan.barebone.task.types;
 
-import me.brennan.barebone.task.state.State;
-import me.brennan.barebone.task.state.States;
+import me.brennan.barebone.task.Task;
+import me.brennan.barebone.state.State;
+import me.brennan.barebone.state.States;
 
 import java.util.UUID;
 
@@ -54,9 +55,5 @@ public abstract class AbstractTask implements Task {
     @Override
     public boolean isStopped() {
         return stopped;
-    }
-
-    public UUID getUuid() {
-        return uuid;
     }
 }
