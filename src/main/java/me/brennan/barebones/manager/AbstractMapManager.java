@@ -25,6 +25,22 @@ public class AbstractMapManager<K, V> implements Iterable<V> {
         return map.get(key);
     }
 
+    public boolean contains(K key) {
+        return map.containsKey(key);
+    }
+
+    public void clear() {
+        map.clear();
+    }
+
+    public int size() {
+        return map.size();
+    }
+
+    public boolean isEmpty() {
+        return map.isEmpty();
+    }
+
     @NotNull
     @Override
     public Iterator<V> iterator() {

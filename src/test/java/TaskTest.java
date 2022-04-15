@@ -1,5 +1,4 @@
-import me.brennan.barebone.task.Task;
-import me.brennan.barebone.task.manager.TaskManager;
+import me.brennan.barebones.task.manager.TaskManager;
 import org.junit.jupiter.api.Test;
 
 /**
