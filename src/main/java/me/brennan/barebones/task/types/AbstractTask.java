@@ -1,11 +1,14 @@
 package me.brennan.barebones.task.types;
 
+import me.brennan.barebones.http.AllCookiesJar;
+import me.brennan.barebones.proxy.Proxy;
 import me.brennan.barebones.proxy.ProxyList;
 import me.brennan.barebones.task.Task;
 import me.brennan.barebones.state.State;
 import me.brennan.barebones.state.States;
 import okhttp3.OkHttpClient;
 
+import java.net.InetSocketAddress;
 import java.util.UUID;
 
 /**
@@ -18,9 +21,13 @@ public abstract class AbstractTask implements Task {
 
     private ProxyList proxyList;
 
-    private final OkHttpClient client = new OkHttpClient.Builder().build();
+    private OkHttpClient client;
+
+    // this is a field so when we rotate proxy it will have the same cookies.
+    private final AllCookiesJar cookieJar = new AllCookiesJar();
 
     public AbstractTask() {
+        this.rotateProxy(); // set our initial client with a proxy.
     }
 
     /**
@@ -71,5 +78,28 @@ public abstract class AbstractTask implements Task {
     @Override
     public boolean isStopped() {
         return stopped;
+    }
+
+    protected void rotateProxy() {
+        final Proxy proxy = proxyList.randomProxy();
+
+        if (proxy != null) {
+            if(proxy.getUsername() != null && proxy.getPassword() != null) {
+                this.client = new OkHttpClient.Builder()
+                        .proxy(new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress(proxy.getIp(), proxy.getPort())))
+                        .proxyAuthenticator(proxy.getAuthenticator())
+                        .cookieJar(cookieJar)
+                        .build();
+            } else {
+                this.client = new OkHttpClient.Builder()
+                        .proxy(new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress(proxy.getIp(), proxy.getPort())))
+                        .cookieJar(cookieJar)
+                        .build();
+            }
+        } else {
+            this.client = new OkHttpClient.Builder()
+                    .cookieJar(cookieJar)
+                    .build();
+        }
     }
 }

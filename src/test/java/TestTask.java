@@ -15,6 +15,8 @@ public class TestTask extends AbstractTask {
         if (States.INITIALIZE.equals(state)) {
             System.out.println("Initializing");
 
+            this.rotateProxy();
+
             return TaskState.ADD_TO_CART;
         } else if (TaskState.ADD_TO_CART.equals(state)) {
             System.out.println("Adding to cart");
