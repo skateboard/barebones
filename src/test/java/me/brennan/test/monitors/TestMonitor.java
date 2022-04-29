@@ -1,6 +1,6 @@
+package me.brennan.test.monitors;
+
 import me.brennan.barebones.monitor.AbstractMonitor;
-import me.brennan.barebones.product.AbstractProduct;
-import me.brennan.barebones.product.Product;
 import me.brennan.barebones.product.provided.SimpleProduct;
 
 import java.util.concurrent.CompletableFuture;
@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author Brennan / skateboard
- * @since 4/14/2022
+ * @since 4/29/2022
  **/
 public class TestMonitor extends AbstractMonitor {
 

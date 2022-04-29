@@ -1,3 +1,5 @@
+package me.brennan.test.tasks;
+
 import me.brennan.barebones.task.types.MonitoredTask;
 
 import java.util.concurrent.CompletableFuture;
@@ -5,7 +7,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * @author Brennan / skateboard
- * @since 4/14/2022
+ * @since 4/29/2022
  **/
 public class TestMonitorTask extends MonitoredTask {
 

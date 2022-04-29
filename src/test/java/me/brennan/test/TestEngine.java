@@ -1,5 +1,8 @@
+package me.brennan.test;
+
 import me.brennan.barebones.BareboneEngine;
 import me.brennan.barebones.task.manager.TaskManager;
+import me.brennan.test.tasks.TestTask;
 
 /**
  * @author Brennan / skateboard
@@ -16,6 +19,10 @@ public class TestEngine extends BareboneEngine {
     public void start() {
         this.add(this.taskManager);
         this.deploy();
+
+        // #TODO LOADING FROM FILES
+
+        this.taskManager.executeTask(new TestTask());
     }
 
     public TaskManager getTaskManager() {
