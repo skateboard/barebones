@@ -1,11 +1,12 @@
 package me.brennan.barebones.monitor;
 
-import me.brennan.barebones.state.State;
+import me.brennan.barebones.http.Client;
 import me.brennan.barebones.task.types.MonitoredTask;
-import okhttp3.OkHttpClient;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Brennan / skateboard
@@ -17,17 +18,18 @@ public interface Monitor {
 
     List<MonitoredTask> getTasks();
 
-    State stop();
+    CompletableFuture<?> run() throws ExecutionException, InterruptedException;
+
+    void stop();
 
     boolean isStopped();
 
     void setStopped(boolean stopped);
 
-    State next(State state);
 
     /**
      * Our monitor current http client
      * @return OkHttpClient - the http client
      */
-    OkHttpClient getClient();
+    Client getClient();
 }

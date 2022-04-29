@@ -1,58 +1,43 @@
 package me.brennan.barebones.task.types;
 
-import me.brennan.barebones.http.AllCookiesJar;
-import me.brennan.barebones.proxy.Proxy;
+import io.vertx.core.AbstractVerticle;
+import me.brennan.barebones.Context;
+import me.brennan.barebones.http.Client;
 import me.brennan.barebones.proxy.ProxyList;
 import me.brennan.barebones.task.Task;
-import me.brennan.barebones.state.State;
-import me.brennan.barebones.state.States;
-import okhttp3.OkHttpClient;
 
-import java.net.InetSocketAddress;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Brennan / skateboard
  * @since 4/14/2022
  **/
-public abstract class AbstractTask implements Task {
-    private final UUID uuid = UUID.randomUUID();
+public abstract class AbstractTask extends AbstractVerticle implements Task {
+    private final UUID uuid;
     private boolean stopped = false;
 
     private ProxyList proxyList;
 
-    private OkHttpClient client;
-
-    // this is a field so when we rotate proxy it will have the same cookies.
-    private final AllCookiesJar cookieJar = new AllCookiesJar();
+    private Client client;
 
     public AbstractTask() {
-        this.rotateProxy(); // set our initial client with a proxy.
+        this.uuid = UUID.randomUUID();
+
+        //this.client = new Client(Context.getCurrentEngine().getVertx());
     }
 
-    /**
-     * This method is called when you want to start the state loops.
-     */
-    public void runTask() {
-        State state = States.INITIALIZE; // our initial state
-
-        while (!stopped) { // while loop when not stopped
-            state = this.next(state);
-
-            if (state == States.ERROR) { // if we have an error break the loop.
-                System.out.println("Task has encountered a error!");
-                break;
-            }
-        }
+    @Override
+    public void start() throws ExecutionException, InterruptedException {
+        run().whenComplete((result, error) -> this.vertx.undeploy(super.deploymentID())).exceptionally(throwable -> null);
     }
 
     /**
      * This method is called when you want to stop the task.
      */
     @Override
-    public State stop() {
+    public void stop() {
         setStopped(true);
-        return States.NONE;
     }
 
     @Override
@@ -66,7 +51,7 @@ public abstract class AbstractTask implements Task {
     }
 
     @Override
-    public OkHttpClient getClient() {
+    public Client getClient() {
         return client;
     }
 
@@ -78,28 +63,5 @@ public abstract class AbstractTask implements Task {
     @Override
     public boolean isStopped() {
         return stopped;
-    }
-
-    protected void rotateProxy() {
-        final Proxy proxy = proxyList.randomProxy();
-
-        if (proxy != null) {
-            if(proxy.getUsername() != null && proxy.getPassword() != null) {
-                this.client = new OkHttpClient.Builder()
-                        .proxy(new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress(proxy.getIp(), proxy.getPort())))
-                        .proxyAuthenticator(proxy.getAuthenticator())
-                        .cookieJar(cookieJar)
-                        .build();
-            } else {
-                this.client = new OkHttpClient.Builder()
-                        .proxy(new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress(proxy.getIp(), proxy.getPort())))
-                        .cookieJar(cookieJar)
-                        .build();
-            }
-        } else {
-            this.client = new OkHttpClient.Builder()
-                    .cookieJar(cookieJar)
-                    .build();
-        }
     }
 }

@@ -9,21 +9,19 @@ public class TaskTest {
 
     @Test
     public void testTask() {
-        final TaskManager taskManager = new TaskManager();
+        final TestEngine engine = new TestEngine();
+        engine.start();
 
-        final TestMonitor monitor = new TestMonitor();
-        final TestMonitorTask task = new TestMonitorTask();
+        engine.getTaskManager().executeTask(new TestTask());
 
-        taskManager.add(task);
+//        final TestMonitor monitor = new TestMonitor();
+//        final TestMonitorTask task = new TestMonitorTask();
+//
+//        monitor.addTask(task);
+//
+//        engine.getVertx().deployVerticle(task);
+//        engine.getVertx().deployVerticle(monitor);
 
-        monitor.addTask(task);
-
-        new Thread(monitor::runMonitor).start();
-        taskManager.executeTask(task.getUUID());
-
-        // keep main thread running
-        while (true) {
-
-        }
+        while (true);
     }
 }

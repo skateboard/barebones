@@ -1,7 +1,10 @@
 import me.brennan.barebones.monitor.AbstractMonitor;
-import me.brennan.barebones.state.State;
-import me.brennan.barebones.state.States;
+import me.brennan.barebones.product.AbstractProduct;
+import me.brennan.barebones.product.Product;
+import me.brennan.barebones.product.provided.SimpleProduct;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -11,42 +14,47 @@ import java.util.concurrent.TimeUnit;
 public class TestMonitor extends AbstractMonitor {
 
     @Override
-    public State next(State state) {
-        if (States.INITIALIZE.equals(state)) {
-            System.out.println("[MONITOR] Initializing");
-
-            return MonitorState.GET_PRODUCT_INFO;
-        } else if (MonitorState.GET_PRODUCT_INFO.equals(state)) {
-            System.out.println("[MONITOR] Getting product info");
-            return getProductInfo();
-        } else if (MonitorState.FAILED_GET_PRODUCT_INFO.equals(state)) {
-            System.out.println("[MONITOR] Failed to get product info");
-            return this.stop();
-        } else if (MonitorState.SUCCESSFUL_GOT_PRODUCT_INFO.equals(state)) {
-            System.out.println("[MONITOR] Got product info");
-            System.out.println("[MONITOR] notifying tasks");
-
-            this.notifyTasks();
-
-            return this.stop();
+    public CompletableFuture<?> run() throws ExecutionException, InterruptedException {
+        System.out.println("[MONITOR] Initializing");
+        var initialize = initialize();
+        if (!initialize.get()) {
+            return CompletableFuture.completedFuture(null);
         }
-
-        return States.ERROR;
-    }
-
-    private MonitorState getProductInfo() {
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (Exception e) {
-            e.printStackTrace();
+        System.out.println("[MONITOR] Getting product info");
+        var productInfo = getProductInfo();
+        if (!productInfo.get()) {
+            return CompletableFuture.completedFuture(null);
         }
+        System.out.println("[MONITOR] Got product info");
+        System.out.println("[MONITOR] Notifying tasks");
 
-        return MonitorState.SUCCESSFUL_GOT_PRODUCT_INFO;
+        this.notifyTasks(new SimpleProduct("Test Product", "12345", "aasd1231", 20.00, 0));
+
+        return CompletableFuture.completedFuture(null);
     }
 
-    private enum MonitorState implements State {
-        GET_PRODUCT_INFO,
-        FAILED_GET_PRODUCT_INFO,
-        SUCCESSFUL_GOT_PRODUCT_INFO
+    private CompletableFuture<Boolean> getProductInfo() {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(4);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return true;
+        });
     }
+
+    private CompletableFuture<Boolean> initialize() {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return true;
+        });
+    }
+
 }

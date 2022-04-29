@@ -1,10 +1,12 @@
 package me.brennan.barebones.task;
 
+import me.brennan.barebones.http.Client;
 import me.brennan.barebones.proxy.ProxyList;
-import me.brennan.barebones.state.State;
-import okhttp3.OkHttpClient;
 
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Brennan / skateboard
@@ -14,7 +16,9 @@ public interface Task {
 
     UUID getUUID();
 
-    State stop();
+    CompletableFuture<?> run() throws ExecutionException, InterruptedException;
+
+    void stop();
 
     /**
      * @return is the task stopped
@@ -28,16 +32,6 @@ public interface Task {
     void setStopped(boolean stopped);
 
     /**
-     * Our task current state to run
-     *
-     * example: ADD TO CART
-     *
-     * @param state - the state of the task
-     * @return the next state to run
-     */
-    State next(State state);
-
-    /**
      * The proxy list the task is using
      *
      * @return the proxy list
@@ -48,5 +42,13 @@ public interface Task {
      * Our task current http client
      * @return OkHttpClient - the http client
      */
-    OkHttpClient getClient();
+    Client getClient();
+
+    default void sleep(long millis) {
+        try {
+            TimeUnit.SECONDS.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

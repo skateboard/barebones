@@ -1,7 +1,7 @@
 package me.brennan.barebones.proxy;
 
-import me.brennan.barebones.manager.AbstractMapManager;
-import me.brennan.barebones.util.MathUtil;
+import io.vertx.core.Vertx;
+import me.brennan.barebones.manager.impl.MapManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,13 +9,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author Brennan / skateboard
  * @since 4/14/2022
  **/
-public class ProxyManager extends AbstractMapManager<String, ProxyList> {
+public class ProxyManager extends MapManager<String, ProxyList> {
 
     /**
      * Will load all text documents containing the word "proxies" from the current use directory.
@@ -79,5 +78,4 @@ public class ProxyManager extends AbstractMapManager<String, ProxyList> {
     public Proxy getRandomProxy(String proxyList) {
         return get(proxyList).randomProxy();
     }
-
 }

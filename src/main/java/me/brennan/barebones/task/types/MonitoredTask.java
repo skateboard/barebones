@@ -1,27 +1,33 @@
 package me.brennan.barebones.task.types;
 
-import java.util.concurrent.TimeUnit;
+import me.brennan.barebones.product.Product;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Brennan / skateboard
  * @since 4/14/2022
  **/
 public abstract class MonitoredTask extends AbstractTask {
-    private boolean notified = false; // just for debugging purposes right now, will make a product object maybe?
+    private CompletableFuture<Product> monitorPromise;
 
-    public void waitForMonitor() {
-        while (!notified) {
-            // wait for the monitor to notify us
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    public Product waitForMonitor() {
+        if (monitorPromise == null) {
+            monitorPromise = new CompletableFuture<>();
         }
+
+        try {
+            return monitorPromise.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
-    public void notifyTask() {
-        notified = true;
+    public void notifyTask(Product product) {
+        monitorPromise.complete(product);
     }
 
 }

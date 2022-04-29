@@ -1,7 +1,8 @@
 import me.brennan.barebones.task.types.AbstractTask;
-import me.brennan.barebones.state.State;
-import me.brennan.barebones.state.States;
 
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -11,38 +12,37 @@ import java.util.concurrent.TimeUnit;
 public class TestTask extends AbstractTask {
 
     @Override
-    public State next(State state) {
-        if (States.INITIALIZE.equals(state)) {
-            System.out.println("Initializing");
-
-            this.rotateProxy();
-
-            return TaskState.ADD_TO_CART;
-        } else if (TaskState.ADD_TO_CART.equals(state)) {
-            System.out.println("Adding to cart");
-
-            return addToCart();
-        } else if (TaskState.FAILED_ADD_TO_CART.equals(state)) {
-            System.out.println("Failed to add to cart");
-            return this.stop();
+    public CompletableFuture<?> run() throws ExecutionException, InterruptedException  {
+        System.out.println("[TASK] Initializing");
+        var initialize = initialize();
+        if (!initialize.get()) {
+            System.out.println("[TASK] Initializing failed");
+            return CompletableFuture.completedFuture(null);
         }
+        System.out.println("[TASK] Adding to cart...");
+        var atc = addToCart();
+        if (!atc.get()) {
+            System.out.println("[TASK] Failed to cart.");
+            return CompletableFuture.completedFuture(null);
+        }
+        System.out.println("[TASK] Added To Cart!");
 
-        return States.ERROR;
+        return CompletableFuture.completedFuture(null);
     }
 
+    private CompletableFuture<Boolean> addToCart() {
+        return CompletableFuture.supplyAsync(() -> {
+            sleep(2);
 
-    private TaskState addToCart() {
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return TaskState.FAILED_ADD_TO_CART;
+            return false;
+        });
     }
 
-    private enum TaskState implements State {
-        ADD_TO_CART,
-        FAILED_ADD_TO_CART;
+    private CompletableFuture<Boolean> initialize() {
+        return CompletableFuture.supplyAsync(() -> {
+            sleep(2);
+
+            return true;
+        });
     }
 }

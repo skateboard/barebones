@@ -1,5 +1,6 @@
-package me.brennan.barebones.manager;
+package me.brennan.barebones.manager.impl;
 
+import me.brennan.barebones.manager.Manager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
@@ -10,7 +11,7 @@ import java.util.Map;
  * @author Brennan / skateboard
  * @since 4/14/2022
  **/
-public class AbstractMapManager<K, V> implements Iterable<V> {
+public class MapManager<K, V> implements Iterable<V>, Manager {
     private final Map<K, V> map = new LinkedHashMap<>();
 
     public void add(K key, V value) {

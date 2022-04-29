@@ -1,7 +1,5 @@
 package me.brennan.barebones.proxy;
 
-import okhttp3.Authenticator;
-import okhttp3.Credentials;
 
 /**
  * @author Brennan / skateboard
@@ -42,13 +40,4 @@ public class Proxy {
         return username;
     }
 
-    public Authenticator getAuthenticator() {
-        return (route, response) -> {
-            final String credential = Credentials.basic(getUsername(), getPassword());
-
-            return response.request().newBuilder()
-                    .header("Proxy-Authorization", credential)
-                    .build();
-        };
-    }
 }
