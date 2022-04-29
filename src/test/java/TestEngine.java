@@ -1,11 +1,11 @@
-import me.brennan.barebones.Barebone;
+import me.brennan.barebones.BareboneEngine;
 import me.brennan.barebones.task.manager.TaskManager;
 
 /**
  * @author Brennan / skateboard
  * @since 4/29/2022
  **/
-public class TestEngine extends Barebone {
+public class TestEngine extends BareboneEngine {
     private final TaskManager taskManager;
 
     public TestEngine() {

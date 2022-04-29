@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @author Brennan / skateboard
  * @since 4/29/2022
  **/
-public abstract class Barebone {
+public abstract class BareboneEngine {
     private Vertx vertx;
 
     private final List<Manager> managers = new LinkedList<>();

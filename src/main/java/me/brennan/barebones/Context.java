@@ -5,13 +5,13 @@ package me.brennan.barebones;
  * @since 4/29/2022
  **/
 public class Context {
-    private static Barebone CURRENT_ENGINE = null;
+    private static BareboneEngine CURRENT_ENGINE = null;
 
-    public static void newContext(Barebone engine) {
+    public static void newContext(BareboneEngine engine) {
         CURRENT_ENGINE = engine;
     }
 
-    public static Barebone getCurrentEngine() {
+    public static BareboneEngine getCurrentEngine() {
         return CURRENT_ENGINE;
     }
 }
