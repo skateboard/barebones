@@ -15,7 +15,7 @@ public class TestMonitorTask extends MonitoredTask {
     public CompletableFuture<?> run() throws ExecutionException, InterruptedException {
         System.out.println("[TASK] Initializing");
         var initialize = initialize();
-        if (!initialize.get()) {
+        if (!initialize.join()) {
             return CompletableFuture.completedFuture(null);
         }
         System.out.println("[TASK] Waiting for monitor...");
@@ -31,7 +31,7 @@ public class TestMonitorTask extends MonitoredTask {
 
         System.out.println("[TASK] Adding to cart.");
         var atc = addToCart();
-        if (!atc.get()) {
+        if (!atc.join()) {
             System.out.println("[TASK] Failed to add to cart.");
             return CompletableFuture.completedFuture(null);
         }

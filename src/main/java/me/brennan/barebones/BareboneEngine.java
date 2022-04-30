@@ -5,6 +5,7 @@ import io.vertx.core.VertxOptions;
 import me.brennan.barebones.manager.Manager;
 import me.brennan.barebones.manager.impl.AbstractContextMapManager;
 
+import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -20,6 +21,9 @@ public abstract class BareboneEngine {
 
     public abstract void start();
 
+    /**
+     * need to find a better way to do this.
+     */
     protected void deploy() {
         this.vertx = Vertx.vertx(new VertxOptions()
                 .setBlockedThreadCheckInterval(1)

@@ -17,12 +17,12 @@ public class TestMonitor extends AbstractMonitor {
     public CompletableFuture<?> run() throws ExecutionException, InterruptedException {
         System.out.println("[MONITOR] Initializing");
         var initialize = initialize();
-        if (!initialize.get()) {
+        if (!initialize.join()) {
             return CompletableFuture.completedFuture(null);
         }
         System.out.println("[MONITOR] Getting product info");
         var productInfo = getProductInfo();
-        if (!productInfo.get()) {
+        if (!productInfo.join()) {
             return CompletableFuture.completedFuture(null);
         }
         System.out.println("[MONITOR] Got product info");

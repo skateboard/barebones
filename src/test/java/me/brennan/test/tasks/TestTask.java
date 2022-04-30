@@ -15,13 +15,13 @@ public class TestTask extends AbstractTask {
     public CompletableFuture<?> run() throws ExecutionException, InterruptedException  {
         System.out.println("[TASK] Initializing");
         var initialize = initialize();
-        if (!initialize.get()) {
+        if (!initialize.join()) {
             System.out.println("[TASK] Initializing failed");
             return CompletableFuture.completedFuture(null);
         }
         System.out.println("[TASK] Adding to cart...");
         var atc = addToCart();
-        if (!atc.get()) {
+        if (!atc.join()) {
             System.out.println("[TASK] Failed to cart.");
             return CompletableFuture.completedFuture(null);
         }
