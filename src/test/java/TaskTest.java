@@ -11,9 +11,10 @@ public class TaskTest {
 
     @Test
     public void testTask() {
-        final TestEngine engine = new TestEngine();
-        engine.start();
-
-        while (true);
+//        final TestEngine engine = new TestEngine();
+//        engine.start();
+//
+//        while (true);
+        System.out.println((452424428 ^ 452424345));
     }
 }
