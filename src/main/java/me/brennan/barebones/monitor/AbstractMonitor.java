@@ -1,7 +1,6 @@
 package me.brennan.barebones.monitor;
 
 import io.vertx.core.AbstractVerticle;
-import me.brennan.barebones.Context;
 import me.brennan.barebones.http.Client;
 import me.brennan.barebones.product.Product;
 import me.brennan.barebones.task.types.MonitoredTask;
@@ -26,7 +25,7 @@ public abstract class AbstractMonitor extends AbstractVerticle implements Monito
     public AbstractMonitor() {
         this.uuid = UUID.randomUUID();
 
-        this.client = new Client(Context.getCurrentEngine().getVertx());
+        this.client = new Client(getVertx());
     }
 
     @Override

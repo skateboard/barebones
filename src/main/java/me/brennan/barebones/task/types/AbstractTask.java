@@ -1,7 +1,6 @@
 package me.brennan.barebones.task.types;
 
 import io.vertx.core.AbstractVerticle;
-import me.brennan.barebones.Context;
 import me.brennan.barebones.http.Client;
 import me.brennan.barebones.proxy.ProxyList;
 import me.brennan.barebones.task.Task;
@@ -24,7 +23,7 @@ public abstract class AbstractTask extends AbstractVerticle implements Task {
     public AbstractTask() {
         this.uuid = UUID.randomUUID();
 
-        //this.client = new Client(Context.getCurrentEngine().getVertx());
+        this.client = new Client(getVertx());
     }
 
     @Override

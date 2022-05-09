@@ -32,7 +32,6 @@ public abstract class BareboneEngine {
                 .setBlockedThreadCheckIntervalUnit(TimeUnit.HOURS)
                 .setMaxWorkerExecuteTimeUnit(TimeUnit.MINUTES)
                 .setPreferNativeTransport(true));
-        Context.newContext(this);
 
         managers.forEach(manager -> {
             if (manager instanceof AbstractContextMapManager) {
