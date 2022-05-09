@@ -1,6 +1,7 @@
 package me.brennan.barebones.task.types;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Vertx;
 import me.brennan.barebones.http.Client;
 import me.brennan.barebones.proxy.ProxyList;
 import me.brennan.barebones.task.Task;

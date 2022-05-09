@@ -10,20 +10,15 @@ import java.util.concurrent.CompletableFuture;
  * @author Brennan / skateboard
  * @since 4/29/2022
  **/
-public class Client extends AbstractVerticle {
+public class Client {
     private final HttpClient client;
 
     public Client(Vertx parent) {
-        this(new HttpClientOptions().
+        this.client = parent.createHttpClient(new HttpClientOptions().
                 setProtocolVersion(HttpVersion.HTTP_2).
                 setSsl(true).
                 setUseAlpn(true).
-                setTrustAll(true)
-        );
-    }
-
-    public Client(HttpClientOptions options) {
-        this.client = vertx.createHttpClient(options);
+                setTrustAll(true));
     }
 
     public CompletableFuture<HttpClientResponse> get(String url) {

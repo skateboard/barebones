@@ -43,8 +43,4 @@ public abstract class BareboneEngine {
     public void add(Manager manager) {
         managers.add(manager);
     }
-
-    public Vertx getVertx() {
-        return vertx;
-    }
 }
