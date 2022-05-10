@@ -2,6 +2,8 @@ package me.brennan.barebones.monitor;
 
 import io.vertx.core.AbstractVerticle;
 import me.brennan.barebones.http.Client;
+import me.brennan.barebones.http.factory.ClientFactory;
+import me.brennan.barebones.http.fingerpritns.ChromeFingerprint;
 import me.brennan.barebones.product.Product;
 import me.brennan.barebones.task.types.MonitoredTask;
 
@@ -25,7 +27,7 @@ public abstract class AbstractMonitor extends AbstractVerticle implements Monito
     public AbstractMonitor() {
         this.uuid = UUID.randomUUID();
 
-        this.client = new Client(getVertx());
+        this.client = ClientFactory.createClient(getVertx(), new ChromeFingerprint());
     }
 
     @Override

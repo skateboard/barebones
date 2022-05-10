@@ -1,8 +1,9 @@
 package me.brennan.barebones.task.types;
 
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Vertx;
 import me.brennan.barebones.http.Client;
+import me.brennan.barebones.http.factory.ClientFactory;
+import me.brennan.barebones.http.fingerpritns.ChromeFingerprint;
 import me.brennan.barebones.proxy.ProxyList;
 import me.brennan.barebones.task.Task;
 
@@ -18,13 +19,12 @@ public abstract class AbstractTask extends AbstractVerticle implements Task {
     private boolean stopped = false;
 
     private ProxyList proxyList;
-
-    private Client client;
+    private final Client client;
 
     public AbstractTask() {
         this.uuid = UUID.randomUUID();
 
-        this.client = new Client(getVertx());
+        this.client = ClientFactory.createClient(getVertx(), new ChromeFingerprint());
     }
 
     @Override
