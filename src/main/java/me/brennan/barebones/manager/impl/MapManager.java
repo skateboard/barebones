@@ -3,10 +3,7 @@ package me.brennan.barebones.manager.impl;
 import me.brennan.barebones.manager.Manager;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -86,6 +83,26 @@ public class MapManager<K, V> implements Iterable<V>, Manager {
 
         try {
             return map.isEmpty();
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    public Set<Map.Entry<K, V>> entrySet() {
+        readLock.lock();
+
+        try {
+            return map.entrySet();
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    public Collection<K> keys() {
+        readLock.lock();
+
+        try {
+            return map.keySet();
         } finally {
             readLock.unlock();
         }
