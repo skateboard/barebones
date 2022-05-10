@@ -1,5 +1,6 @@
 package me.brennan.barebones.task.manager;
 
+import me.brennan.barebones.file.FileSystem;
 import me.brennan.barebones.manager.impl.AbstractContextMapManager;
 import me.brennan.barebones.task.types.AbstractTask;
 import me.brennan.barebones.task.Task;
@@ -11,6 +12,13 @@ import java.util.UUID;
  * @since 4/14/2022
  **/
 public class TaskManager extends AbstractContextMapManager<UUID, Task> {
+    private final FileSystem<?> fileSystem;
+
+    public TaskManager(FileSystem<?> fileSystem) {
+        this.fileSystem = fileSystem;
+        this.fileSystem.setVertx(getContext());
+    }
+
     public void add(Task task) {
         super.add(task.getUUID(), task);
     }

@@ -1,6 +1,7 @@
 package me.brennan.test;
 
 import me.brennan.barebones.BareboneEngine;
+import me.brennan.barebones.file.impl.JsonObjectFileSystem;
 import me.brennan.barebones.task.manager.TaskManager;
 import me.brennan.test.tasks.TestTask;
 
@@ -12,7 +13,7 @@ public class TestEngine extends BareboneEngine {
     private final TaskManager taskManager;
 
     public TestEngine() {
-        this.taskManager = new TaskManager();
+        this.taskManager = new TaskManager(new JsonObjectFileSystem());
     }
 
     @Override
